@@ -25,11 +25,15 @@
   "author": "Futa Hirakoba",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.2.6"
+    "@actions/core": "^1.2.6",
+    "@linear/sdk": "^1.13.0",
+    "yaml-front-matter": "^4.1.1"
   },
   "devDependencies": {
+    "@cybozu/eslint-config": "^13.0.0",
     "@types/jest": "^26.0.15",
     "@types/node": "^14.14.9",
+    "@types/yaml-front-matter": "^4.1.0",
     "@typescript-eslint/parser": "^4.8.1",
     "@vercel/ncc": "^0.25.1",
     "eslint": "^7.17.0",
