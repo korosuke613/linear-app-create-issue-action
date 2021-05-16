@@ -1,105 +1,63 @@
-<p align="center">
-  <a href="https://github.com/actions/typescript-action/actions"><img alt="typescript-action status" src="https://github.com/actions/typescript-action/workflows/build-test/badge.svg"></a>
-</p>
+# linear-app-create-issue-action
 
-# Create a JavaScript Action using TypeScript
+GitHub Action to create an Issue for Linear.app.
 
-Use this template to bootstrap the creation of a TypeScript action.:rocket:
+## Usage
 
-This template includes compilation support, tests, a validation workflow, publishing, and versioning guidance.  
+### Input
+See action.yml
 
-If you are new, there's also a simpler introduction.  See the [Hello World JavaScript Action](https://github.com/actions/hello-world-javascript-action)
+### Pre-requisites
 
-## Create an action from this template
+### Workflow
+Create a workflow `.yml` file in your repositories `.github/workflows` directory. An example workflow is available below. For more information, reference the GitHub Help Documentation for [Creating a workflow file](https://help.github.com/en/articles/configuring-a-workflow#creating-a-workflow-file).
 
-Click the `Use this Template` and provide the new repo details for your action
+### Issue file
+Create issue file in markdown format.
 
-## Code in Main
+Write the contents of [IssueCreateInput](https://github.com/linear/linear/blob/8553690da1455e2f6a109bed65223bc5400fa7c2/packages/sdk/src/schema.graphql#L2021) in YAML format on the line enclosed by ---. title is required.
 
-> First, you'll need to have a reasonably modern version of `node` handy. This won't work with versions older than 9, for instance.
+```markdown
+---
+title: Issue file example  # title is required
+estimate: 1
+---
+This block is description.
 
-Install the dependencies  
-```bash
-$ npm install
+## Items
+* Item 1
+* Item 2
+* Item 3
+
+## CheckBoxes
+- [ ] CheckBox 1
+- [ ] CheckBox 2
+
+*created by [korosuke613/linear-app-create-issue-action](https://github.com/korosuke613/linear-app-create-issue-action)*
 ```
 
-Build the typescript and package it for distribution
-```bash
-$ npm run build && npm run package
-```
 
-Run the tests :heavy_check_mark:  
-```bash
-$ npm test
+#### Example workflow
 
- PASS  ./index.test.js
-  ✓ throws invalid number (3ms)
-  ✓ wait 500 ms (504ms)
-  ✓ test runs (95ms)
-
-...
-```
-
-## Change action.yml
-
-The action.yml contains defines the inputs and output for your action.
-
-Update the action.yml with your name, description, inputs and outputs for your action.
-
-See the [documentation](https://help.github.com/en/articles/metadata-syntax-for-github-actions)
-
-## Change the Code
-
-Most toolkit and CI/CD operations involve async operations so the action is run in an async function.
-
-```javascript
-import * as core from '@actions/core';
-...
-
-async function run() {
-  try { 
-      ...
-  } 
-  catch (error) {
-    core.setFailed(error.message);
-  }
-}
-
-run()
-```
-
-See the [toolkit documentation](https://github.com/actions/toolkit/blob/master/README.md#packages) for the various packages.
-
-## Publish to a distribution branch
-
-Actions are run from GitHub repos so we will checkin the packed dist folder. 
-
-Then run [ncc](https://github.com/zeit/ncc) and push the results:
-```bash
-$ npm run package
-$ git add dist
-$ git commit -a -m "prod dependencies"
-$ git push origin releases/v1
-```
-
-Note: We recommend using the `--license` option for ncc, which will create a license file for all of the production node modules used in your project.
-
-Your action is now published! :rocket: 
-
-See the [versioning documentation](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
-
-## Validate
-
-You can now validate the action by referencing `./` in a workflow in your repo (see [test.yml](.github/workflows/test.yml))
-
+[create-issue-every-friday.yml](example/create-issue-every-friday.yml)
 ```yaml
-uses: ./
-with:
-  milliseconds: 1000
+name: Create Issue every friday
+on:
+  schedule:
+    cron: "0 8 * * 5"  # At 08:00 on Friday (UTC).
+
+jobs:
+  create-issue:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: korosuke613/linear-app-create-issue-action@v1
+        with:
+          issueFilePath: "./example/example-issue.md"
+          apiKey: ${{ secrets.YOUR_API_TOKEN_OF_LINEAR_APP }}
+          teamId: ${{ secrets.YOUR_TEAM_ID_OF_LINEAR_APP }}
+          stateId: ${{ secrets.YOUR_STATE_ID_OF_LINEAR_APP }}
 ```
 
-See the [actions tab](https://github.com/actions/typescript-action/actions) for runs of this action! :rocket:
-
-## Usage:
-
-After testing you can [create a v1 tag](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md) to reference the stable and latest V1 action
+## License
+The scripts and documentation in this project are released under the [MIT License](LICENSE)
