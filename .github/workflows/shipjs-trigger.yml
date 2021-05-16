@@ -4,7 +4,7 @@ on:
     types:
       - closed
 jobs:
-  build:
+  publish:
     name: Release
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'releases/v')
@@ -33,5 +33,22 @@ jobs:
           npm ci
           npm run prerelease
       - run: npx shipjs trigger
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  update-major-tag:
+    runs-on: ubuntu-latest
+    needs: publish
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          ref: main
+      - run: |
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+      - run: |
+          git tag v1
+          git push -f origin v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
