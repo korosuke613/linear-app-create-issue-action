@@ -7,5 +7,24 @@ module.exports = {
   transform: {
     '^.+\\.ts$': 'ts-jest'
   },
-  verbose: true
+  verbose: true,
+  collectCoverageFrom: [
+    "src/**/*.{js,ts}",
+    "!**/node_modules/**",
+    "!src/__tests__/**",
+  ],
+  reporters: [
+    "default",
+    [
+      "jest-junit",
+      {
+        suiteName: "jest tests",
+        outputDirectory: "reports",
+        outputName: "jest.xml",
+        classNameTemplate: "{classname}-{title}",
+        titleTemplate: "{classname}-{title}",
+        ancestorSeparator: " › ",
+      },
+    ],
+  ],
 }
