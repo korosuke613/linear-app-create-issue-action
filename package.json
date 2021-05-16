@@ -1,8 +1,8 @@
 {
-  "name": "typescript-action",
+  "name": "linear-app-create-issue-action",
   "version": "0.0.0",
   "private": true,
-  "description": "TypeScript template action",
+  "description": "GitHub Action to create an Issue for Linear.app.",
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc",
@@ -20,9 +20,9 @@
   "keywords": [
     "actions",
     "node",
-    "setup"
+    "linear-app"
   ],
-  "author": "",
+  "author": "Futa Hirakoba",
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.2.6"
