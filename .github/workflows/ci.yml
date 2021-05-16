@@ -11,10 +11,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: |
-          npm install
-      - run: |
-          npm run all
+      - run: npm ci
+      - run: npm run all
+      - name: Check that the build file has been committed.
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "OK, workspace is clean"
+          else
+            echo "Failed, workspace is not clean"
+            exit 1
+          fi
 
   test: # make sure the action works on a clean machine without building
     runs-on: ubuntu-latest
