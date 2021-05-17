@@ -1,6 +1,10 @@
 name: 'linear-app-create-issue'
 description: 'GitHub Action to create an Issue for Linear.app.'
-author: 'Futa Hirakoba'
+
+branding:
+  icon: check-square
+  color: purple
+author: 'Futa Hirakoba <korosuke613613@gmail.com>'
 
 inputs:
   issueFilePath: # change this
