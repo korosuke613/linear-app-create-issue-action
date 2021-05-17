@@ -72,7 +72,7 @@ jobs:
           report_paths: '**/reports/jest.xml'
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
-  test: # make sure the action works on a clean machine without building
+  e2e-test: # make sure the action works on a clean machine without building
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
