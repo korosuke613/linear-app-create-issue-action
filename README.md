@@ -7,9 +7,17 @@ GitHub Action to create an Issue for [Linear.app](https://linear.app/).
 ## Usage
 
 ### Input
-See action.yml
+See [action.yml](./action.yml)
 
-### Pre-requisites
+|arg|description|required|type|
+|---|---|---|---|
+|issueFilePath|File path of Issue markdown|yes|string|
+|apiKey|api key of Linear.app ([ref](https://developers.linear.app/docs/graphql/working-with-the-graphql-api#personal-api-keys))|yes|string|
+|teamId|team id of Linear.app ([ref](#faq-get-teamid-stateid))|yes|string|
+|stateId|state id of Linear.app ([ref](#faq-get-teamid-stateid))|yes|string|
+|isDryrun|enable dryrun (not create issue) |no|boolean|
+
+## Pre-requisites
 
 ### Workflow
 Create a workflow `.yml` file in your repositories `.github/workflows` directory. An example workflow is available below. For more information, reference the GitHub Help Documentation for [Creating a workflow file](https://help.github.com/en/articles/configuring-a-workflow#creating-a-workflow-file).
@@ -61,6 +69,81 @@ jobs:
 
 **result**
 ![](./images/result_example.png)
+
+## FAQ
+
+<a name="faq-get-teamid-stateid"></a>
+### How do I get teamId and stateId?
+Call the Linear API. An example is shown below.
+
+#### teamId
+
+input
+
+```shell
+curl \
+  -X POST \
+  -H "Content-Type: application/json" \
+  -H "Authorization: <Replace this with your Linear API Key>" \
+  --data '{ "query": "{ teams { nodes { id name } } }" }' \
+  https://api.linear.app/graphql | jq
+```
+
+output
+
+```json
+{
+  "data": {
+    "teams": {
+      "nodes": [
+        {
+          "id": "eeaa0cbd-xxxx-xxxx-xxxx-1c701c3485f1",
+          "name": "korosuke613"
+        }
+      ]
+    }
+  }
+}
+```
+
+#### stateId
+
+input
+
+```shell
+curl \
+  -X POST \
+  -H "Content-Type: application/json" \
+  -H "Authorization: <Replace this with your Linear API Key>" \
+  --data '{ "query": "{ workflowStates { nodes { id name type } } }" }' \
+  https://api.linear.app/graphql | jq
+```
+
+output
+
+```json
+{
+  "data": {
+    "workflowStates": {
+      "nodes": [
+        {
+          "id": "76984209-xxxx-xxxx-xxxx-78eb458a7cbe",
+          "name": "In Review",
+          "type": "started"
+        },
+        {
+          "id": "e788ada6-xxxx-xxxx-xxxx-5717c26104ad",
+          "name": "Todo",
+          "type": "unstarted"
+        },
+        {
+          "id": "c02edc3a-xxxx-xxxx-xxxx-85c349766a13",
+          "name": "Backlog",
+          "type": "backlog"
+        },
+        ...
+}
+```
 
 ## License
 The scripts and documentation in this project are released under the [MIT License](LICENSE)
