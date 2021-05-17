@@ -1,6 +1,8 @@
 # linear-app-create-issue-action
 
-GitHub Action to create an Issue for Linear.app.
+GitHub Action to create an Issue for [Linear.app](https://linear.app/).
+
+[![build-test](https://github.com/korosuke613/linear-app-create-issue-action/actions/workflows/ci.yml/badge.svg)](https://github.com/korosuke613/linear-app-create-issue-action/actions/workflows/ci.yml) [![codecov](https://codecov.io/gh/korosuke613/linear-app-create-issue-action/branch/main/graph/badge.svg?token=2XrAav9ZlE)](https://codecov.io/gh/korosuke613/linear-app-create-issue-action)
 
 ## Usage
 
