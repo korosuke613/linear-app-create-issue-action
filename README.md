@@ -17,6 +17,7 @@ Create issue file in markdown format.
 
 Write the contents of [IssueCreateInput](https://github.com/linear/linear/blob/8553690da1455e2f6a109bed65223bc5400fa7c2/packages/sdk/src/schema.graphql#L2021) in YAML format on the line enclosed by ---. title is required.
 
+[example-issue.md](./example/example-issue.md)
 ```markdown
 ---
 title: Issue file example  # title is required

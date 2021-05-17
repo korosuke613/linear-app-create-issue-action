@@ -1,0 +1,16 @@
+name: Create Issue every friday
+on:
+  schedule:
+    cron: "0 8 * * 5"  # At 08:00 on Friday (UTC).
+
+jobs:
+  create-issue:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: korosuke613/linear-app-create-issue-action@v1
+        with:
+          issueFilePath: "./example/example-issue.md"
+          apiKey: ${{ secrets.YOUR_API_TOKEN_OF_LINEAR_APP }}
+          teamId: ${{ secrets.YOUR_TEAM_ID_OF_LINEAR_APP }}
+          stateId: ${{ secrets.YOUR_STATE_ID_OF_LINEAR_APP }}
