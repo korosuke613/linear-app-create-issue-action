@@ -47,7 +47,7 @@ This block is description.
 name: Create Issue every friday
 on:
   schedule:
-    cron: "0 8 * * 5"  # At 08:00 on Friday (UTC).
+    - cron: "0 8 * * 5"  # At 08:00 on Friday (UTC).
 
 jobs:
   create-issue:
