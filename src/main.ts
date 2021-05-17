@@ -10,13 +10,13 @@ async function main(
   isDryrun: boolean
 ) {
   if (apiKey === undefined || apiKey === "") {
-    throw new UndefinedError("LINEAR_API_TOKEN");
+    throw new UndefinedError("apiKey");
   }
   if (teamId === undefined || teamId === "") {
-    throw new UndefinedError("LINEAR_TEAM_ID");
+    throw new UndefinedError("teamId");
   }
   if (stateId === undefined || stateId === "") {
-    throw new UndefinedError("LINEAR_STATE_ID");
+    throw new UndefinedError("stateId");
   }
 
   if (

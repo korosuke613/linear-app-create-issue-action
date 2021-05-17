@@ -98,13 +98,13 @@ const fs_1 = __nccwpck_require__(747);
 function main(issueFilePath, apiKey, teamId, stateId, isDryrun) {
     return __awaiter(this, void 0, void 0, function* () {
         if (apiKey === undefined || apiKey === "") {
-            throw new Linear_1.UndefinedError("LINEAR_API_TOKEN");
+            throw new Linear_1.UndefinedError("apiKey");
         }
         if (teamId === undefined || teamId === "") {
-            throw new Linear_1.UndefinedError("LINEAR_TEAM_ID");
+            throw new Linear_1.UndefinedError("teamId");
         }
         if (stateId === undefined || stateId === "") {
-            throw new Linear_1.UndefinedError("LINEAR_STATE_ID");
+            throw new Linear_1.UndefinedError("stateId");
         }
         if (issueFilePath === undefined ||
             issueFilePath === "" ||
