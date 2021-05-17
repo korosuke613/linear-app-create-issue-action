@@ -1,0 +1,15 @@
+name: Manual test for action
+on:
+  workflow_dispatch:
+
+jobs:
+  create-issue:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: korosuke613/linear-app-create-issue-action@v1
+        with:
+          issueFilePath: "./example/example-issue.md"
+          apiKey: ${{ secrets.API_TOKEN_OF_LINEAR_APP }}
+          teamId: ${{ secrets.TEAM_ID_OF_LINEAR_APP }}
+          stateId: ${{ secrets.STATE_ID_OF_LINEAR_APP }}
