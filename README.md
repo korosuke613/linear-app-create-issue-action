@@ -121,7 +121,7 @@ curl \
 
 output
 
-```json
+```json5
 {
   "data": {
     "workflowStates": {
@@ -141,7 +141,10 @@ output
           "name": "Backlog",
           "type": "backlog"
         },
-        ...
+        // etc..
+      ]
+    }
+  }
 }
 ```
 
