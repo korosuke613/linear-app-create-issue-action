@@ -1,11 +1,24 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'linear-app-create-issue'
+description: 'GitHub Action to create an Issue for Linear.app.'
+author: 'Futa Hirakoba'
+
 inputs:
-  milliseconds: # change this
+  issueFilePath: # change this
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+    description: 'File path of Issue markdown.'
+  apiKey: # change this
+    required: true
+    description: 'api key of Linear.app.'
+  teamId: # change this
+    required: true
+    description: 'team id of Linear.app.'
+  stateId: # change this
+    required: true
+    description: 'state id of Linear.app.'
+  isDryrun: # change this
+    required: false
+    description: 'enable dryrun'
+
 runs:
   using: 'node12'
   main: 'dist/index.js'

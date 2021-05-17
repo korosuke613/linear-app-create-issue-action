@@ -1,17 +1,22 @@
 {
-  "name": "typescript-action",
+  "name": "linear-app-create-issue-action",
   "version": "0.0.0",
   "private": true,
-  "description": "TypeScript template action",
+  "description": "GitHub Action to create an Issue for Linear.app.",
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc",
     "format": "prettier --write **/*.ts",
     "format-check": "prettier --check **/*.ts",
     "lint": "eslint src/**/*.ts",
+    "build-package": "npm-run-all -l -s build package",
     "package": "ncc build --source-map --license licenses.txt",
     "test": "jest",
-    "all": "npm run build && npm run format && npm run lint && npm run package && npm test"
+    "test:ci": "jest --ci --runInBand --coverage",
+    "check": "npm-run-all -s build -p test:ci lint",
+    "release": "shipjs prepare",
+    "test-lint": "npm-run-all -l -p test:ci lint",
+    "prerelease": "npm-run-all -l -p build-package test-lint"
   },
   "repository": {
     "type": "git",
@@ -20,16 +25,20 @@
   "keywords": [
     "actions",
     "node",
-    "setup"
+    "linear-app"
   ],
-  "author": "",
+  "author": "Futa Hirakoba",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.2.6"
+    "@actions/core": "^1.2.6",
+    "@linear/sdk": "^1.13.0",
+    "yaml-front-matter": "^4.1.1"
   },
   "devDependencies": {
+    "@cybozu/eslint-config": "^13.0.0",
     "@types/jest": "^26.0.15",
     "@types/node": "^14.14.9",
+    "@types/yaml-front-matter": "^4.1.0",
     "@typescript-eslint/parser": "^4.8.1",
     "@vercel/ncc": "^0.25.1",
     "eslint": "^7.17.0",
@@ -37,8 +46,12 @@
     "eslint-plugin-jest": "^24.1.3",
     "jest": "^26.6.3",
     "jest-circus": "^26.6.3",
+    "jest-junit": "^12.0.0",
     "js-yaml": "^3.14.0",
+    "nock": "^13.0.11",
+    "npm-run-all": "^4.1.5",
     "prettier": "2.2.1",
+    "shipjs": "^0.23.2",
     "ts-jest": "^26.4.4",
     "typescript": "^4.1.3"
   }
