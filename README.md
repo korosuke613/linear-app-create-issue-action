@@ -15,10 +15,9 @@ See action.yml
 Create a workflow `.yml` file in your repositories `.github/workflows` directory. An example workflow is available below. For more information, reference the GitHub Help Documentation for [Creating a workflow file](https://help.github.com/en/articles/configuring-a-workflow#creating-a-workflow-file).
 
 ### Issue file
-Create issue file in markdown format.
+Create issue file in markdown format. Write the contents of [IssueCreateInput](https://github.com/linear/linear/blob/8553690da1455e2f6a109bed65223bc5400fa7c2/packages/sdk/src/schema.graphql#L2021) in YAML format on the line enclosed by ---. title is required.
 
-Write the contents of [IssueCreateInput](https://github.com/linear/linear/blob/8553690da1455e2f6a109bed65223bc5400fa7c2/packages/sdk/src/schema.graphql#L2021) in YAML format on the line enclosed by ---. title is required.
-
+#### Example workflow
 [example-issue.md](./example/example-issue.md)
 ```markdown
 ---
@@ -40,8 +39,6 @@ This block is description.
 ```
 
 
-#### Example workflow
-
 [create-issue-every-friday.yml](example/create-issue-every-friday.yml)
 ```yaml
 name: Create Issue every friday
@@ -61,6 +58,9 @@ jobs:
           teamId: ${{ secrets.YOUR_TEAM_ID_OF_LINEAR_APP }}
           stateId: ${{ secrets.YOUR_STATE_ID_OF_LINEAR_APP }}
 ```
+
+**result**
+![](./images/result_example.png)
 
 ## License
 The scripts and documentation in this project are released under the [MIT License](LICENSE)
