@@ -129,12 +129,12 @@ function main(issueFilePath, apiKey, teamId, stateId, isDryrun) {
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const issuePath = core_1.getInput("issuePath");
+            const issueFilePath = core_1.getInput("issueFilePath");
             const apiKey = core_1.getInput("apiKey");
             const teamId = core_1.getInput("teamId");
             const stateId = core_1.getInput("stateId");
             const isDryrun = Boolean(core_1.getInput("isDryrun"));
-            yield main(issuePath, apiKey, teamId, stateId, isDryrun);
+            yield main(issueFilePath, apiKey, teamId, stateId, isDryrun);
         }
         catch (error) {
             core_1.setFailed(error.message);

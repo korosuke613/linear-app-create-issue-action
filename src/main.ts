@@ -45,13 +45,13 @@ async function main(
 
 async function run(): Promise<void> {
   try {
-    const issuePath: string = getInput("issuePath");
+    const issueFilePath: string = getInput("issueFilePath");
     const apiKey: string = getInput("apiKey");
     const teamId: string = getInput("teamId");
     const stateId: string = getInput("stateId");
     const isDryrun: boolean = Boolean(getInput("isDryrun"));
 
-    await main(issuePath, apiKey, teamId, stateId, isDryrun);
+    await main(issueFilePath, apiKey, teamId, stateId, isDryrun);
   } catch (error) {
     setFailed(error.message);
   }
