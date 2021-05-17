@@ -1,10 +1,7 @@
 module.exports = {
   extends: [
     "plugin:github/recommended",
-    "@cybozu/eslint-config/presets/node",
-    "@cybozu/eslint-config/presets/typescript",
-    "prettier",
-    "prettier/@typescript-eslint",
+    "@cybozu/eslint-config/presets/node-typescript-prettier",
   ],
   plugins: ["jest"],
   env: {
