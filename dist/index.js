@@ -44,6 +44,19 @@ class Linear {
         this.teamId = teamId;
         this.stateId = stateId;
         this.isDryrun = isDryrun;
+        this.resolveFormatString = (formatString, replaces) => {
+            let resultString = formatString;
+            for (const [key, value] of Object.entries(replaces)) {
+                console.log(`resolve: ${key}, ${value}`);
+                if (typeof value === "string" && formatString.includes(`\${${key}}`)) {
+                    const replace = `\\\${${key}}`;
+                    const regexp = new RegExp(replace, "g");
+                    resultString = resultString.replace(regexp, value);
+                    console.log(resultString);
+                }
+            }
+            return resultString;
+        };
         this.client = new sdk_1.LinearClient({ apiKey });
     }
     /**
@@ -65,10 +78,14 @@ class Linear {
             return this.client.issueCreate(issueCreateInput);
         });
     }
-    readData(data) {
+    readData(data, replaces) {
         const front = yaml_front_matter_1.loadFront(data);
         const { __content, title, description } = front, other = __rest(front, ["__content", "title", "description"]);
-        this.issueData = Object.assign({ title, description: __content }, other);
+        let replacedTitle = title;
+        if (replaces !== undefined) {
+            replacedTitle = this.resolveFormatString(title, replaces);
+        }
+        this.issueData = Object.assign({ title: replacedTitle, description: __content }, other);
         return this.issueData;
     }
 }
@@ -95,7 +112,8 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core_1 = __nccwpck_require__(186);
 const Linear_1 = __nccwpck_require__(907);
 const fs_1 = __nccwpck_require__(747);
-function main(issueFilePath, apiKey, teamId, stateId, isDryrun) {
+const util_1 = __nccwpck_require__(24);
+function main(issueFilePath, apiKey, teamId, stateId, isDryrun, embed) {
     return __awaiter(this, void 0, void 0, function* () {
         if (apiKey === undefined || apiKey === "") {
             throw new Linear_1.UndefinedError("apiKey");
@@ -111,10 +129,11 @@ function main(issueFilePath, apiKey, teamId, stateId, isDryrun) {
             !issueFilePath.endsWith(".md")) {
             throw new Linear_1.UndefinedError("issueFilePath");
         }
+        const replaceRecords = util_1.parseEmbed(embed);
         const client = new Linear_1.Linear(apiKey, teamId, stateId, isDryrun);
         core_1.info(`--- create ${issueFilePath} ---`);
         const data = fs_1.readFileSync(issueFilePath);
-        const issueData = client.readData(data);
+        const issueData = client.readData(data, replaceRecords);
         core_1.info(JSON.stringify(issueData, null, 2));
         if (isDryrun) {
             core_1.info(`--- !!DRYRUN!! ---`);
@@ -133,7 +152,8 @@ function run() {
             const teamId = core_1.getInput("teamId");
             const stateId = core_1.getInput("stateId");
             const isDryrun = Boolean(core_1.getInput("isDryrun"));
-            yield main(issueFilePath, apiKey, teamId, stateId, isDryrun);
+            const embed = core_1.getInput("embed");
+            yield main(issueFilePath, apiKey, teamId, stateId, isDryrun, embed);
         }
         catch (error) {
             core_1.setFailed(error.message);
@@ -141,6 +161,30 @@ function run() {
     });
 }
 run();
+
+
+/***/ }),
+
+/***/ 24:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.parseEmbed = void 0;
+const parseEmbed = (inputEmbed) => {
+    if (inputEmbed === "" || inputEmbed === undefined) {
+        return undefined;
+    }
+    const splitEmbed = inputEmbed.split(",");
+    const recordedEmbed = {};
+    for (const e of splitEmbed) {
+        const keyAndValue = e.split("=");
+        recordedEmbed[keyAndValue[0]] = keyAndValue[1];
+    }
+    return recordedEmbed;
+};
+exports.parseEmbed = parseEmbed;
 
 
 /***/ }),

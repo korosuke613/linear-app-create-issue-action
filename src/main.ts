@@ -1,13 +1,15 @@
 import { getInput, setFailed, info } from "@actions/core";
 import { Linear, UndefinedError } from "./Linear";
 import { readFileSync } from "fs";
+import { parseEmbed } from "./util";
 
 async function main(
   issueFilePath: string,
   apiKey: string,
   teamId: string,
   stateId: string,
-  isDryrun: boolean
+  isDryrun: boolean,
+  embed: string
 ) {
   if (apiKey === undefined || apiKey === "") {
     throw new UndefinedError("apiKey");
@@ -27,11 +29,13 @@ async function main(
     throw new UndefinedError("issueFilePath");
   }
 
+  const replaceRecords = parseEmbed(embed);
+
   const client = new Linear(apiKey, teamId, stateId, isDryrun);
 
   info(`--- create ${issueFilePath} ---`);
   const data = readFileSync(issueFilePath);
-  const issueData = client.readData(data);
+  const issueData = client.readData(data, replaceRecords);
   info(JSON.stringify(issueData, null, 2));
 
   if (isDryrun) {
@@ -50,8 +54,9 @@ async function run(): Promise<void> {
     const teamId: string = getInput("teamId");
     const stateId: string = getInput("stateId");
     const isDryrun: boolean = Boolean(getInput("isDryrun"));
+    const embed: string = getInput("embed");
 
-    await main(issueFilePath, apiKey, teamId, stateId, isDryrun);
+    await main(issueFilePath, apiKey, teamId, stateId, isDryrun, embed);
   } catch (error) {
     setFailed(error.message);
   }

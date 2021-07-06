@@ -52,12 +52,37 @@ export class Linear {
     return this.client.issueCreate(issueCreateInput);
   }
 
-  readData(data: string | Buffer): IssueData {
+  private resolveFormatString = (
+    formatString: string,
+    replaces: Record<string, unknown>
+  ) => {
+    let resultString = formatString;
+    for (const [key, value] of Object.entries(replaces)) {
+      console.log(`resolve: ${key}, ${value}`);
+      if (typeof value === "string" && formatString.includes(`\${${key}}`)) {
+        const replace = `\\\${${key}}`;
+        const regexp = new RegExp(replace, "g");
+        resultString = resultString.replace(regexp, value);
+        console.log(resultString);
+      }
+    }
+    return resultString;
+  };
+
+  readData(
+    data: string | Buffer,
+    replaces?: Record<string, unknown>
+  ): IssueData {
     const front = loadFront(data);
     const { __content, title, description, ...other } = front;
 
+    let replacedTitle = title;
+    if (replaces !== undefined) {
+      replacedTitle = this.resolveFormatString(title, replaces);
+    }
+
     this.issueData = {
-      title,
+      title: replacedTitle,
       description: __content,
       ...other,
     };
