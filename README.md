@@ -16,20 +16,19 @@ See [action.yml](./action.yml)
 |teamId|team id of Linear.app ([ref](#faq-get-teamid-stateid))|yes|string|
 |stateId|state id of Linear.app ([ref](#faq-get-teamid-stateid))|yes|string|
 |isDryrun|enable dryrun (not create issue) |no|boolean|
+|embed|embed variable. (ex: "month=July,day=13")|no|string|
 
-## Pre-requisites
+## Usage
 
-### Workflow
-Create a workflow `.yml` file in your repositories `.github/workflows` directory. An example workflow is available below. For more information, reference the GitHub Help Documentation for [Creating a workflow file](https://help.github.com/en/articles/configuring-a-workflow#creating-a-workflow-file).
-
-### Issue file
+### Create Issue file
 Create issue file in markdown format. Write the contents of [IssueCreateInput](https://github.com/linear/linear/blob/8553690da1455e2f6a109bed65223bc5400fa7c2/packages/sdk/src/schema.graphql#L2021) in YAML format on the line enclosed by ---. title is required.
 
-#### Example workflow
+If you want to change the value of YAML dynamically, you can replace `${something}` when executing the action.
+
 [example-issue.md](./example/example-issue.md)
 ```markdown
 ---
-title: Issue file example  # title is required
+title: Issue file example (${day}, ${month}) # title is required
 estimate: 1
 ---
 This block is description.
@@ -46,6 +45,10 @@ This block is description.
 *created by [korosuke613/linear-app-create-issue-action](https://github.com/korosuke613/linear-app-create-issue-action)*
 ```
 
+### Create Workflow
+Create a workflow `.yml` file in your repositories `.github/workflows` directory. An example workflow is available below. For more information, reference the GitHub Help Documentation for [Creating a workflow file](https://help.github.com/en/articles/configuring-a-workflow#creating-a-workflow-file).
+
+If you want to replace ${something} in YAML, use `embed` with `key1=value1,key2=value2,...`.
 
 [create-issue-every-friday.yml](example/create-issue-every-friday.yml)
 ```yaml
@@ -65,6 +68,7 @@ jobs:
           apiKey: ${{ secrets.YOUR_API_TOKEN_OF_LINEAR_APP }}
           teamId: ${{ secrets.YOUR_TEAM_ID_OF_LINEAR_APP }}
           stateId: ${{ secrets.YOUR_STATE_ID_OF_LINEAR_APP }}
+          embed: month=July,day=13
 ```
 
 **result**
