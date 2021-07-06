@@ -22,6 +22,9 @@ inputs:
   isDryrun: # change this
     required: false
     description: 'enable dryrun'
+  embed:
+    required: false
+    description: 'embed variable. (ex: "month=July,day=13")'
 
 runs:
   using: 'node12'

@@ -1,5 +1,5 @@
 ---
-title: Issue file example  # title is required
+title: Issue file example (${day}, ${month}) # title is required
 estimate: 1
 ---
 This block is description.

@@ -76,10 +76,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: ./
+      - name: test for normal
+        uses: ./
         with:
           issueFilePath: "./src/__tests__/test.md"
           apiKey: "apiKey"
           teamId: "teamId"
           stateId: "stateId"
           isDryrun: "true"
+      - name: test for embed
+        uses: ./
+        with:
+          issueFilePath: "./src/__tests__/test_with_replace.md"
+          apiKey: "apiKey"
+          teamId: "teamId"
+          stateId: "stateId"
+          isDryrun: "true"
+          embed: "month=July,day=13"

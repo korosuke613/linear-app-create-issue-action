@@ -125,5 +125,19 @@ describe(Linear, () => {
         stateId: "stateId",
       });
     });
+
+    test("create issue with replace", async () => {
+      linear.isDryrun = true;
+
+      const data = readFileSync("./src/__tests__/test_with_replace.md");
+      const issueData = linear.readData(data, { month: "July", day: "13" });
+
+      expect(issueData).toEqual({
+        title: "test issue (13, July)",
+        estimate: 1,
+        description:
+          "\n\n## Items\n* Item 1\n* Item 2\n* Item 3\n\n## CheckBoxes\n- [ ] CheckBox 1\n- [ ] CheckBox 2\n\n*created by [hoge](https://github.com)*\n",
+      });
+    });
   });
 });
