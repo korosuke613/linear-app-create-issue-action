@@ -58,12 +58,10 @@ export class Linear {
   ) => {
     let resultString = formatString;
     for (const [key, value] of Object.entries(replaces)) {
-      console.log(`resolve: ${key}, ${value}`);
       if (typeof value === "string" && formatString.includes(`\${${key}}`)) {
         const replace = `\\\${${key}}`;
         const regexp = new RegExp(replace, "g");
         resultString = resultString.replace(regexp, value);
-        console.log(resultString);
       }
     }
     return resultString;

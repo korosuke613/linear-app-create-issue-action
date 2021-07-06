@@ -30,6 +30,8 @@ async function main(
   }
 
   const replaceRecords = parseEmbed(embed);
+  info("--- view embed ---");
+  info(JSON.stringify(replaceRecords, null, 2));
 
   const client = new Linear(apiKey, teamId, stateId, isDryrun);
 

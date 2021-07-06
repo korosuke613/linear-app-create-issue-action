@@ -47,12 +47,10 @@ class Linear {
         this.resolveFormatString = (formatString, replaces) => {
             let resultString = formatString;
             for (const [key, value] of Object.entries(replaces)) {
-                console.log(`resolve: ${key}, ${value}`);
                 if (typeof value === "string" && formatString.includes(`\${${key}}`)) {
                     const replace = `\\\${${key}}`;
                     const regexp = new RegExp(replace, "g");
                     resultString = resultString.replace(regexp, value);
-                    console.log(resultString);
                 }
             }
             return resultString;
@@ -130,6 +128,8 @@ function main(issueFilePath, apiKey, teamId, stateId, isDryrun, embed) {
             throw new Linear_1.UndefinedError("issueFilePath");
         }
         const replaceRecords = util_1.parseEmbed(embed);
+        core_1.info("--- view embed ---");
+        core_1.info(JSON.stringify(replaceRecords, null, 2));
         const client = new Linear_1.Linear(apiKey, teamId, stateId, isDryrun);
         core_1.info(`--- create ${issueFilePath} ---`);
         const data = fs_1.readFileSync(issueFilePath);
