@@ -14,3 +14,4 @@ jobs:
           apiKey: ${{ secrets.YOUR_API_TOKEN_OF_LINEAR_APP }}
           teamId: ${{ secrets.YOUR_TEAM_ID_OF_LINEAR_APP }}
           stateId: ${{ secrets.YOUR_STATE_ID_OF_LINEAR_APP }}
+          embed: month=July,day=13
