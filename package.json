@@ -37,7 +37,7 @@
   "devDependencies": {
     "@cybozu/eslint-config": "^13.0.0",
     "@types/jest": "^26.0.23",
-    "@types/node": "^15.12.5",
+    "@types/node": "^17.0.30",
     "@types/yaml-front-matter": "^4.1.0",
     "@typescript-eslint/parser": "^4.23.0",
     "@vercel/ncc": "^0.28.5",
