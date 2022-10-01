@@ -30,7 +30,7 @@
   "author": "Futa Hirakoba",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.2.7",
+    "@actions/core": "^1.10.0",
     "@linear/sdk": "^1.15.0",
     "yaml-front-matter": "^4.1.1"
   },
